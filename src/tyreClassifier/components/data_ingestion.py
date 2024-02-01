@@ -3,15 +3,16 @@ import zipfile
 import gdown
 from tyreClassifier.logging import logger
 from dataclasses import dataclass
+from pathlib import Path
 
 
 
 @dataclass(frozen=True)
 class DataIngestionConfig:
-    root_dir= 'data/data_ingestion'
+    root_dir= 'artifacts/data_ingestion'
     source_URL='https://drive.google.com/file/d/1GZcRzKatOjgJqNn9W0Wprb9O1MSuFIrS/view?usp=sharing'
-    local_data_file= 'data/data_ingestion/Faultfindy.zip'
-    unzip_dir= 'data/data_ingestion'
+    local_data_file='artifacts/data_ingestion/Faultfindy.zip'
+    unzip_dir= Path('artifacts/data_ingestion')
 
 class DataIngestion:
     def __init__(self, config: DataIngestionConfig):
@@ -26,7 +27,7 @@ class DataIngestion:
         try: 
             dataset_url = self.config.source_URL
             zip_download_dir = self.config.local_data_file
-            os.makedirs("artifacts/data_ingestion", exist_ok=True)
+            os.makedirs(self.config.root_dir, exist_ok=True)
             logger.info(f"Downloading data from {dataset_url} into file {zip_download_dir}")
 
             file_id = dataset_url.split("/")[-2]
