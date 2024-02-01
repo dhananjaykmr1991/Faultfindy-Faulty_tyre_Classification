@@ -20,8 +20,8 @@ list_of_files = [
     f"src/{project_name}/pipeline/__init__.py",
     f"src/{project_name}/pipeline/stage_01_data_ingestion.py",
     f"src/{project_name}/pipeline/stage_02_data_preprocessing.py",
-    f"src/{project_name}/pipeline/stage_03_model_evaluation.py",
-    f"src/{project_name}/pipeline/stage_04_model_training.py",
+    f"src/{project_name}/pipeline/stage_04_model_evaluation.py",
+    f"src/{project_name}/pipeline/stage_03_model_training.py",
     "models/"
     "visuals/"
     "requirements.txt",

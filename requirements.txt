@@ -1,4 +1,5 @@
 tensorflow==2.12.0
+scikit-learn
 pandas 
 opencv-python
 dvc
@@ -9,9 +10,7 @@ seaborn
 python-box==6.0.2
 pyYAML
 tqdm
-ensure==1.0.2
 joblib
-types-PyYAML
 scipy
 Flask
 Flask-Cors
