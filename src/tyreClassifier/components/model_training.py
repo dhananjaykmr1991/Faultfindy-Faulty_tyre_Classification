@@ -6,17 +6,18 @@ from keras.applications import VGG16,ResNet50
 from keras.callbacks import EarlyStopping,ModelCheckpoint,ReduceLROnPlateau
 import numpy as np
 from dataclasses import dataclass
-from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import KFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV,RandomizedSearchCV
 import pickle 
 
 @dataclass(frozen=True)
 class ModelTrainingConfig:
-    split_data_path = 'artifacts\data_Preprocessing\split_list.npy'
-    flat_split_data_path = 'artifacts\data_Preprocessing\flat_split_list.npy'
-    split_list = np.load(split_data_path, allow_pickle=True)
-    flat_split_list = np.load(flat_split_data_path, allow_pickle=True)
+    split_data_path = r'artifacts\data_Preprocessing\split_list.npy'
+    flat_split_data_path = r'artifacts\data_Preprocessing\flat_split_list.npy'
+    split_list = np.load(Path(split_data_path), allow_pickle=True)
+    flat_split_list = np.load(Path(flat_split_data_path), allow_pickle=True)
     flat_train_images, flat_test_images, flat_train_labels, flat_test_labels = flat_split_list
     train_images, test_images, train_labels, test_labels, val_images, val_labels = split_list
     IMAGE_SIZE = [224, 224]
@@ -36,8 +37,10 @@ class ModelSelction:
         x = Flatten()(vgg.output)
         x = Dense(self.config.num_classes, activation = 'softmax')(x)
         model = Model(inputs = vgg.input, outputs = x)
+        model.compile(optimizer ='adam',loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
         return model
+    
     
     def model_resnet_50(self):
 
@@ -59,16 +62,17 @@ class ModelSelction:
         x = Dropout(0.5)(x)
         predictions = Dense(self.config.num_classes, activation='softmax')(x)
         model = Model(inputs = resnet_50.input, outputs = predictions)
+        model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 
         return model
     
-    def model_SVC(self):
-        param_grid={'C':[10],
-            'gamma':[0.001],
-            'kernel':['rbf','poly']}
+    def model_KNN(self):
+        model = KNeighborsClassifier()
 
-        model = SVC(probability=True)
-        model=GridSearchCV(model,param_grid)
+        kf=KFold(n_splits=10,shuffle=True,random_state=42)
+        parameter={'n_neighbors': np.arange(30, 55, 2)}
+        model=RandomizedSearchCV(estimator = model, param_distributions=parameter, cv=kf, verbose=1)
+        return model
     
     def model_RandomForest(self):
         model = RandomForestClassifier(n_estimators=150) 
@@ -76,6 +80,8 @@ class ModelSelction:
                       "bootstrap": [True, False], "criterion": ["gini", "entropy"]} 
         model = RandomizedSearchCV(estimator = model, param_distributions = param_dist, n_iter = 100, 
                                    cv = 3, verbose=2, random_state=42, n_jobs = -1)
+        
+        return model
 
 
 
@@ -83,15 +89,15 @@ class ModelTraining:
     def __init__(self,config:ModelTrainingConfig):
         self.config=config
 
-    def SVM_training(self,model):
-        model.fit(self.config.flat_train_images,self.config.flat_train_label)
+    def KNN_training(self,model):
+        model.fit(self.config.flat_train_images,self.config.flat_train_labels)
         saved_model = pickle.dumps(model)  
-        pickle.dump(model, open(Path('models\SVM.pkl'), 'wb'))
+        pickle.dump(model, open(Path('models\KNN.pkl'), 'wb'))
 
         return model
     
     def RandomForest_training(self,model):
-        model.fit(self.config.flat_train_images,self.config.flat_train_label)
+        model.fit(self.config.flat_train_images,self.config.flat_train_labels)
         saved_model = pickle.dumps(model)  
         pickle.dump(model, open(Path('models\RandomForest.pkl'), 'wb'))
 
@@ -100,23 +106,22 @@ class ModelTraining:
 
 
     def vgg16_training(self,model):
-        checkpoint =ModelCheckpoint("models\vgg16", save_best_only=True)
+        checkpoint =ModelCheckpoint("models\vgg16.h5", save_best_only=True,save_weights_only=False)
         early_stopping =EarlyStopping(patience=5, restore_best_weights=True)
         learning_rate_reduction = ReduceLROnPlateau(monitor = 'val_accuracy',patience = 2,verbose = 1,factor = 0.3, min_lr = 0.000001)
-
-        model.compile(optimizer ='adam',loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-        model=model.fit_generator(self.config.train_images,self.config.train_labels,
+        model=model.fit(self.config.train_images,self.config.train_labels,
                                   epochs=10,validation_data=(self.config.val_images, self.config.val_labels),
                                  callbacks=[checkpoint,early_stopping,ReduceLROnPlateau]) 
-
-        model.save('models\vgg16.h5')      
+     
         return model
     
     def resnet_50_training(self,model):
-        batch_size = 32
-        model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+        checkpoint =ModelCheckpoint("models\resnet_50.h5", save_best_only=True,save_weights_only=False)
+        early_stopping =EarlyStopping(patience=5, restore_best_weights=True)
+        learning_rate_reduction = ReduceLROnPlateau(monitor = 'val_accuracy',patience = 2,verbose = 1,factor = 0.3, min_lr = 0.000001)
         model.fit(self.config.train_images,self.config.train_labels,epochs=10,
-                  validation_data=(self.config.val_images, self.config.val_labels))
-        model.save('models\resnet_50.h5')
+                  validation_data=(self.config.val_images, self.config.val_labels),
+                  callbacks=[checkpoint,early_stopping,ReduceLROnPlateau])
+        
         return model
     
