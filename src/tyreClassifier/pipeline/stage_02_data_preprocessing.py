@@ -10,10 +10,10 @@ class DatapreprocessingPipeline:
     def main(self):
         config = DataPreprocessingConfig
         data_Preprocessing = DataPreprocessing(config=config)
-        images, labels= data_Preprocessing.load_data()
-        train_images, test_images, train_labels, test_labels, val_images, val_labels = data_Preprocessing.split_data(images, labels)
-        split_data=[train_images, test_images, train_labels, test_labels, val_images, val_labels]
-        data_Preprocessing.save_split_data(split_data)
+        images, labels, flat_images= data_Preprocessing.load_data()
+        split_data,flat_split_list = data_Preprocessing.split_data(images, labels, flat_images)
+        data_Preprocessing.save_split_data(split_data,flat_split_list)
+        train_images, test_images, train_labels, test_labels, val_images, val_labels = split_data
         
         n_train = train_labels.shape[0]
         n_val = val_labels.shape[0]
