@@ -1,3 +1,4 @@
+from tyreClassifier.logging import logger
 import cv2
 import tqdm
 import os
@@ -55,7 +56,8 @@ class DataPreprocessing:
         images = np.array(images)
         labels = np.array(labels, dtype = 'int32')
         flat_images= np.array(flat_images, dtype = 'float32')
-        print(len(flat_images))
+        logger.info("loading image and Converting into vectors ")
+
     
 
         return images, labels, flat_images
@@ -72,6 +74,7 @@ class DataPreprocessing:
 
         split_list=[ train_images, test_images, train_labels, test_labels, val_images, val_labels]
         flat_split_list = [flat_train_images, flat_test_images, flat_train_labels, flat_test_labels]
+        logger.info("Spliting data into test,train and validation ")
 
 
 
@@ -84,6 +87,7 @@ class DataPreprocessing:
         flat_split_list_path=Path(f"{self.config.preprocessed_data_path}/flat_split_list.npy")
         np.save(split_list_path, np.array(split_list, dtype=object),allow_pickle=True)
         np.save(flat_split_list_path, np.array(flat_split_list, dtype=object),allow_pickle=True)
+        logger.info(f"Saving test,train and validation as numpy array at {split_list_path} and {flat_split_list_path}")
         
         
     
