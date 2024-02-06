@@ -9,11 +9,31 @@ This dataset digital images of tyres, divided into two categories: 1,028 defecti
 ![App Screenshot](https://i.ibb.co/H2p77qB/Tyre-Condition-Count-Plot.png) ![App Screenshot](https://i.ibb.co/sjq0Pbs/observed-category-proportion.png)
 
 ### Objectives
-Develop an Image Classification Model: Utilize deep and Machine learning algorithms to accurately classify images of tyres into two categories: defective and good condition. Compare Different Architectures: Evaluate the performance of different models like KNN,RandomForest,VGG16 and ResNet50 to understand the trade-offs between model complexity and accuracy. Optimize Model Performance: Employ advanced techniques like dynamic learning rate adjustment and early stopping to fine-tune the models for optimal performance. Significance The successful implementation of this project can lead to several key advancements:
+Develop an Image Classification Model: Utilize deep and Machine learning algorithms to accurately classify images of tyres into two categories: defective and good condition. Compare Different Architectures: Evaluate the performance of different models like **KNN**,**Random Forest**,**VGG16** and **ResNet50** to understand the trade-offs between model complexity and accuracy. Optimize Model Performance: Employ advanced techniques like dynamic learning rate adjustment and early stopping to fine-tune the models for optimal performance. Significance The successful implementation of this project can lead to several key advancements:
 
 Enhancing Safety Standards: By accurately identifying defective tyres, the model can contribute to improved safety measures in the automotive industry. Quality Control in Manufacturing: The automated detection of tyre defects can streamline quality control processes in tyre production. Technological Benchmarking: This project serves as a benchmark for applying deep learning techniques in practical, real-world scenarios, particularly in industries where safety is paramount. With these objectives and significance in mind, let's delve into the specifics of the project, starting with data preprocessing and manipulation.
 Let's have a look on few sample images from both the categories:
 ![App Screenshot](https://i.ibb.co/RB2V2VQ/explore-data-Set.png)
+
+### Lets plot the Training and Validation Loss Curves for deep learning models "VGG16" and "ResNet-50" 
+![App Screenshot](https://i.ibb.co/LC3xR2L/Training-Validation-Accuracy-for-VGG16.png)
+
+![App Screenshot](https://i.ibb.co/0Vv9y3f/Training-Validation-Accuracy-for-Res-Net-50.png)
+
+### Compare the accuracy of ***KNN***,***Random Forest***,***VGG16*** and ***ResNet50*** to find the best model
+![App Screenshot](https://i.ibb.co/YZkyK35/best-model-vgg16.png)
+
+### Now compare the confusion matrix
+<ul>
+  <li>  ![App Screenshot])(https://i.ibb.co/Ydj0wT8/vgg16-Confusion-Matrix.png)  ![App Screenshot](https://i.ibb.co/F0gxmMW/resnet-50-Confusion-Matrix.png)
+  </li>
+  <li>
+![App Screenshot](https://i.ibb.co/D77t5y2/KNN-Confusion-Matrix.png) ![App Screenshot](https://i.ibb.co/HBdjXyW/Random-Forest-Confusion-Matrix.png)
+
+  </li>
+</ul>
+
+
 
 
 
