@@ -24,9 +24,11 @@ Let's have a look on few sample images from both the categories:
 ![App Screenshot](https://i.ibb.co/YZkyK35/best-model-vgg16.png)
 
 ### Now compare the confusion matrix
-![App Screenshot])(https://i.ibb.co/Ydj0wT8/vgg16-Confusion-Matrix.png)  ![App Screenshot](https://i.ibb.co/F0gxmMW/resnet-50-Confusion-Matrix.png)
+![App Screenshot])[(https://i.ibb.co/Ydj0wT8/vgg16-Confusion-Matrix.png](https://i.ibb.co/Ydj0wT8/vgg16-Confusion-Matrix.png))  ![App Screenshot](https://i.ibb.co/F0gxmMW/resnet-50-Confusion-Matrix.png)
 
 ![App Screenshot](https://i.ibb.co/D77t5y2/KNN-Confusion-Matrix.png) ![App Screenshot](https://i.ibb.co/HBdjXyW/Random-Forest-Confusion-Matrix.png)
+
+
 
 
 
