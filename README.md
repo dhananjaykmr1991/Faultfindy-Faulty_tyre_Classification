@@ -20,14 +20,20 @@ Let's have a look on few sample images from both the categories:
 
 ![App Screenshot](https://i.ibb.co/0Vv9y3f/Training-Validation-Accuracy-for-Res-Net-50.png)
 
+### Now analyze the confusion matrix
+## *VGG16
+![App Screenshot](https://i.ibb.co/Ydj0wT8/vgg16-Confusion-Matrix.png))  
+## *ResNet-50
+![App Screenshot](https://i.ibb.co/F0gxmMW/resnet-50-Confusion-Matrix.png)
+## *KNN
+![App Screenshot](https://i.ibb.co/D77t5y2/KNN-Confusion-Matrix.png) 
+## *Random Forest 
+![App Screenshot](https://i.ibb.co/HBdjXyW/Random-Forest-Confusion-Matrix.png)
+
 ### Compare the accuracy of ***KNN***,***Random Forest***,***VGG16*** and ***ResNet50*** to find the best model
 ![App Screenshot](https://i.ibb.co/YZkyK35/best-model-vgg16.png)
 
-### Now compare the confusion matrix
-![App Screenshot])[(https://i.ibb.co/Ydj0wT8/vgg16-Confusion-Matrix.png](https://i.ibb.co/Ydj0wT8/vgg16-Confusion-Matrix.png))  ![App Screenshot](https://i.ibb.co/F0gxmMW/resnet-50-Confusion-Matrix.png)
-
-![App Screenshot](https://i.ibb.co/D77t5y2/KNN-Confusion-Matrix.png) ![App Screenshot](https://i.ibb.co/HBdjXyW/Random-Forest-Confusion-Matrix.png)
-
+# It clearly shows that VGG16 is perforing best with an accuracy of 93% 
 
 
 
